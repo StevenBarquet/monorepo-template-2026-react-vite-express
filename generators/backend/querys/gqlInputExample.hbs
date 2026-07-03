@@ -1,0 +1,11 @@
+import { GraphQLBoolean, GraphQLInputObjectType, GraphQLList, GraphQLString } from "graphql";
+
+export const ExampleGqlInput = new GraphQLInputObjectType({
+  name: 'ExampleGqlInput',
+  description: 'GQL Input as example',
+  fields: () => ({
+    ids: { type: new GraphQLList(GraphQLString) },
+    isCorteDone: { type: GraphQLBoolean },
+    tipo_de_cancelacion: { type: GraphQLString },
+  }),
+})

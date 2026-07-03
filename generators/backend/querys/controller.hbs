@@ -1,0 +1,36 @@
+import { validateData } from "./validations";
+{{#if sendAuthUser}}import { AuthUser } from "src/reusable-logic/queries";{{/if}}
+
+/**Controller for {{camelCase name}} {{requestType}} */
+export async function mainController({{#if haveInput}}data: {{typeInputName}}{{/if}}{{#if sendAuthUser}}{{#if haveInput}}, {{/if}}authUser: AuthUser{{/if}}) {
+  try {
+    {{#if haveValidations}}
+    const validated = await validateData(data);
+    {{/if}}
+
+    {{#if (eq requestType "mutation")}}
+      await logic({{#if haveInput}}validated{{/if}}{{#if sendAuthUser}}{{#if haveInput}}, {{/if}}authUser{{/if}});
+
+      return {
+        success: true,
+      };
+    {{/if}}
+
+    {{#if (eq requestType "query")}}
+      const result = await logic({{#if haveInput}}validated{{/if}}{{#if sendAuthUser}}{{#if haveInput}}, {{/if}}authUser{{/if}});
+
+      return result;
+    {{/if}}
+
+    
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+/** */
+async function logic({{#if haveInput}}data: {{typeInputName}}{{/if}}{{#if sendAuthUser}}{{#if haveInput}}, {{/if}}authUser: AuthUser{{/if}}) {
+  console.log(data{{#if sendAuthUser}}, authUser{{/if}});
+}
+

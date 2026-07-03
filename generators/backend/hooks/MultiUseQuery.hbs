@@ -1,0 +1,43 @@
+import { DocumentNode, useQuery } from "@apollo/client";
+import { useEffect } from "react";
+import { swalApiError } from "src/utils/functions/alertUtils";
+import { setGlobalLoading } from "src/utils/functions/storeUtils";
+import { GET_{{constantCase name}}_EXAMPLE, {{pascalCase name}}Gql } from "./gqlQuerys";
+
+type Props<T> = {
+  onSuccess?: (data?: T) => void;
+  onError?: () => void;
+};
+
+function useGet{{pascalCase name}}<T>({
+  onSuccess,
+  onError,
+  query,
+}: Props<T> & { query: DocumentNode }) {
+  // -----------------------CONSTS, HOOKS, STATES
+  const { loading, data } = useQuery<T>(query, {
+    onError: async (err) => {
+      setGlobalLoading(false);
+      await swalApiError(err?.message);
+      onError?.();
+      console.log(err);
+    },
+    onCompleted(data) {
+      onSuccess?.(data as T);
+    },
+  });
+
+  useEffect(() => setGlobalLoading(loading), [loading]);
+
+  // -----------------------MAIN METHODS
+  // -----------------------AUX METHODS
+  // ---------------HOOK DATA
+  return { loading, data };
+}
+
+export const useSomeQuery = (opt: Props<{{pascalCase name}}Gql>) => {
+  return useGet{{pascalCase name}}<{{pascalCase name}}Gql>({
+    ...opt,
+    query: GET_{{constantCase name}}_EXAMPLE,
+  });
+};

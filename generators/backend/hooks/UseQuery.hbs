@@ -1,0 +1,53 @@
+import { gql, useQuery } from '@apollo/client';
+import { useEffect } from 'react';
+import { swalApiError } from 'src/utils/functions/alertUtils';
+import { setGlobalLoading } from 'src/utils/functions/storeUtils';
+
+const GET_{{constantCase name}}= gql`
+  query GET_{{constantCase name}}{{#if haveInput}}($input: SomeGqlInput){{/if}} {
+    parent{
+      child{
+        {{#if haveInput}}
+        someQuery(inputParams: $input) {
+        }
+        {{/if}}
+      }
+    }
+   
+  }
+`;
+
+export type {{pascalCase name}}GqlResponse = {
+   parent: {
+      child: {};
+   }
+};
+
+export function useQuery{{pascalCase name}}({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data?: {{pascalCase name}}GqlResponse) => void;
+  onError?: () => void;
+}) {
+  // -----------------------CONSTS, HOOKS, STATES
+  const {loading, data} = useQuery<{{pascalCase name}}GqlResponse>(GET_{{constantCase name}}, {
+    onError: async (err) => {
+      setGlobalLoading(false);
+      await swalApiError(err?.message);
+      onError?.();
+      console.log(err);
+    },
+    onCompleted(data) {
+      setGlobalLoading(false);
+      onSuccess?.(data);
+    },
+  });
+
+  useEffect(() => setGlobalLoading(loading), [loading]);
+  // -----------------------MAIN METHODS
+
+  // -----------------------AUX METHODS
+  // ---------------HOOK DATA
+  return { data, loading };
+}

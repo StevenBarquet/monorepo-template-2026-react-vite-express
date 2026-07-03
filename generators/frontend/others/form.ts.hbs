@@ -1,0 +1,23 @@
+import { useFormik } from 'formik';
+import { toFormikValidationSchema } from 'zod-formik-adapter';
+
+interface Props {}
+
+
+export function use{{pascalCase name}}Form({}: Props) {
+  // -----------------------CONSTS, HOOKS, STATES
+  const formik = useFormik<SomeType>({
+    initialValues: {},
+    onSubmit: onSubmit,
+    validationSchema: toFormikValidationSchema(someValidation),
+  });
+  // -----------------------MAIN METHODS
+  async function onSubmit(values: SomeType) {
+    console.log(values);
+  }
+  // -----------------------AUX METHODS
+  // -----------------------HOOK DATA
+  return {
+    formik,
+  }
+}

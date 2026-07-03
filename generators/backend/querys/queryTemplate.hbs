@@ -1,0 +1,61 @@
+import { ExpressContext } from 'apollo-server-express';
+import { validateCredentials } from 'src/reusable-logic/queries';
+import { mainController } from './controller';
+{{#if (eq inputType "newInput")}}
+import { {{pascalCase name}}GqlInput } from './gqlInput';
+{{/if}}
+{{#if (eq responseType "SuccessGqlEntity")}}
+import { SuccessGqlEntity } from 'src/graphql/generic-responses/success';
+{{/if}}
+{{#if (eq inputType "idGqlInput")}}
+import { idGqlInput } from 'src/graphql/generic-inputs/id-gql-input';
+{{/if}}
+{{#if (eq inputType "IdListGqlInput")}}
+import { IdListGqlInput } from 'src/graphql/generic-inputs/id-list-gql-input';
+{{/if}}
+{{#if (eq inputType "RSelectSingleGqlInput")}}
+import { RSelectSingleGqlInput } from "src/graphql/generic-inputs/r-select-single-gql-input";
+{{/if}}
+
+export const {{camelCase name}}{{#if (eq requestType "query")}}Q{{else}}M{{/if}} = {
+  {{#if (eq responseType "SuccessGqlEntity")}}
+  type: SuccessGqlEntity('Success{{pascalCase name}}'),
+  {{else}}
+  type: {{responseType}},
+  {{/if}}
+  description: 'Información del conjunto perteneciente al usuario',
+  {{#if haveInput}}
+    args: {
+      inputParams: {
+        {{#if (eq inputType "newInput")}}
+          type: {{pascalCase name}}GqlInput,
+        {{else}}
+          type: {{inputType}},
+        {{/if}}
+      },
+    },
+    resolve: async (
+    _: any,
+    { inputParams }: { inputParams: {{typeInputName}} },
+    context: ExpressContext,
+  ) => {
+  {{else}}
+    resolve: async (_: any, _2: any, context: ExpressContext ) => {
+  {{/if}}
+    {{#if haveAuth}}
+    // ---Auth Validation
+    {{#if sendAuthUser}}const authUser = {{/if}}await validateCredentials(context{{#if adminsOnly}}, true{{/if}});
+    {{/if}}
+
+    {{#if haveInput}}
+      {{#if sendAuthUser}}
+        const result = await mainController(inputParams, authUser);
+        {{else}}
+        const result = await mainController(inputParams);
+      {{/if}}
+    {{else}}
+      const result = await mainController({{#if sendAuthUser}}authUser{{/if}});
+    {{/if}}
+    return result;
+  },
+};

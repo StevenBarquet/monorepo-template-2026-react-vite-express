@@ -1,0 +1,9 @@
+import { zodValidator } from 'shared/utils/zodUtils';
+
+
+/** */
+export async function validateData(data: {{typeInputName}}) {
+  const validated = zodValidator(data, {{camelCase typeInputName}})
+
+  return validated;
+}

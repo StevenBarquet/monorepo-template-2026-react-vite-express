@@ -1,0 +1,12 @@
+import { GraphQLObjectType } from 'graphql';
+import { {{camelCase name}} } from "./{{camelCase name}}";
+
+const nested = new GraphQLObjectType({
+  name: '{{camelCase parentName}}',
+  description: 'Agrega una descripción',
+  fields: () => ({
+    {{camelCase name}},
+  }),
+});
+
+export const {{camelCase parentName}} = { type: nested, resolve: () => nested };

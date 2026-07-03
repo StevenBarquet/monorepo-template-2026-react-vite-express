@@ -1,0 +1,21 @@
+import { gql } from '@apollo/client';
+
+const GET_{{constantCase name}}_EXAMPLE= gql`
+  query GET_{{constantCase name}}_EXAMPLE{{#if haveInput}}($input: SomeGqlInput){{/if}} {
+    parent{
+      child{
+        {{#if haveInput}}
+        someQuery(inputParams: $input) {
+        }
+        {{/if}}
+      }
+    }
+   
+  }
+`;
+
+export type {{pascalCase name}}Gql = {
+   parent: {
+      child: {};
+   }
+};

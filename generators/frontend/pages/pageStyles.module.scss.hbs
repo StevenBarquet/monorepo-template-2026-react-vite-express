@@ -1,0 +1,19 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.{{pascalCase name}} {
+      {{#if (or (eq containerType "Admin") (eq containerType "User"))}}
+      padding-top: $miCuentaPadding;
+      {{else}}
+      @include darkBackgroundGradient();
+      min-height: 100vh;
+      {{/if}}
+      color: white;
+      font-family: 'Inter';
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

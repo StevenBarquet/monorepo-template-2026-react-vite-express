@@ -1,0 +1,24 @@
+// ---Dependencys
+import { ReactElement } from 'react';
+import { Helmet } from 'react-helmet';
+// ---Components
+import { {{pascalCase name}} } from './{{pascalCase name}}/{{pascalCase name}}';
+
+/**
+ * Componente {{pascalCase name}}Page: este componente es para dar datos al Helmet de
+ * la página y concatenarla con el contenedor de la página componente
+ * @returns { ReactElement } ReactElement
+ */
+export default function {{pascalCase name}}Page(): ReactElement {
+  return (
+    <>
+      <Helmet>
+        <title>Vivir Tek | Saber más... Vivir Tekk hace tu vida más sencilla al ofrecerte herramientas prácticas para gestionar tu espacio habitacional </title>
+        <meta name='keywords' content='conjuntos habitacionales, vivir tek' />
+        <meta name='robots' content='index,follow' />
+        <meta name='description' content='Saber más... Vivir Tekk hace tu vida más sencilla al ofrecerte herramientas prácticas para gestionar tu espacio habitacional' />
+      </Helmet>
+      <{{pascalCase name}} />
+    </>
+  );
+}

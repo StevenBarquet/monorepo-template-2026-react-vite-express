@@ -1,0 +1,63 @@
+import { gql, useMutation } from '@apollo/client';
+import { useEffect } from 'react';
+import { swalApiError, swalApiSuccessAuto } from 'src/utils/functions/alertUtils';
+import { setGlobalLoading } from 'src/utils/functions/storeUtils';
+
+const MUTATE_{{constantCase name}}= gql`
+  mutation MUTATE_{{constantCase name}}{{#if haveInput}}($input: SomeGqlInput){{/if}} {
+    parent{
+      child{
+        {{#if haveInput}}
+        someQuery(inputParams: $input) {
+        }
+        {{/if}}
+      }
+    }
+   
+  }
+`;
+
+export type {{pascalCase name}}GqlResponse = {
+   parent: {
+      child: {};
+   }
+};
+
+export function use{{pascalCase name}}Mutate({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data?: {{pascalCase name}}GqlResponse) => void;
+  onError?: () => void;
+}) {
+  // -----------------------CONSTS, HOOKS, STATES
+  const [onMutate, { loading }] = useMutation<{{pascalCase name}}GqlResponse>(MUTATE_{{constantCase name}}, {
+    onError: async (err) => {
+      setGlobalLoading(false);
+      await swalApiError(err?.message);
+      onError?.();
+      console.log(err);
+    },
+    async onCompleted(data) {
+      setGlobalLoading(false);
+      swalApiSuccessAuto();
+      setGlobalLoading(false);
+      onSuccess?.(data);
+    },
+  });
+
+  useEffect(() => setGlobalLoading(loading), [loading]);
+
+  // -----------------------MAIN METHODS
+  {{#if haveInput}}
+  const {{camelCase name}}Mutate = async (input: {{typeInputName}}) => {
+    await onMutate({ variables: { input } });
+  }
+  {{else}}
+  const {{camelCase name}}Mutate = onMutate
+  {{/if}}
+  // -----------------------AUX METHODS
+  // ---------------HOOK DATA
+  return { {{camelCase name}}Mutate, loading };
+}
+
