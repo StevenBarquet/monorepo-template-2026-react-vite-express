@@ -1,0 +1,35 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.ClickableTooltip {
+  font-family: 'Inter';
+  .ant-btn {
+    border-radius: 50%;
+    // background-color: yellowgreen;
+    padding: 0 6px;
+    svg {
+      font-size: 18px;
+    }
+  }
+  .tooltipClose {
+    position: absolute;
+    top: -100vh;
+    left: -100vw;
+    width: 300vw;
+    height: calc(100% + 74px);
+    min-height: 300vh;
+    z-index: 3;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background-color: #00000018;
+    }
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

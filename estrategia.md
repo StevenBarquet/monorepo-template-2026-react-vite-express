@@ -6,6 +6,33 @@
 
 ---
 
+## ESTADO ACTUAL
+
+**Avance global: ~35%** · Fase activa: **Fase 2 (Frontend)** — casi terminada.
+
+| Fase | Estado |
+|------|--------|
+| 1 · Infra raíz (npm + Node 26) | ✅ Cubierta (scripts migrados a npm, `engines` en Node 26, `npm i` corre) |
+| 2 · Frontend que levante | 🟡 ~85% — levanta limpio; faltan tRPC-client/react-query y Formik+Zod (se suman en Fase 4) |
+| 3 · Generadores FE | ⬜ Pendiente |
+| 4 · Backend tRPC + Express | ⬜ Pendiente (lo más grande) |
+| 5 · `apps/shared` | ⬜ Pendiente |
+| 6 · Generadores BE (→ tRPC) | ⬜ Pendiente |
+| 7 · Docs y limpieza | ⬜ Pendiente |
+
+**Notas resumidas:**
+- El FE se armó limpiando un proyecto real ("Vivir Tekk"): de **431 → ~60 archivos**.
+  Fuera negocio, Apollo/GraphQL, framer-motion, `common/forms` y branding. Quedó el
+  esqueleto + design-system genérico. `npm run front` arranca sin errores.
+- Fix clave: `apps/backend/package.json` vacío (0 bytes) rompía `npm i` en toda la
+  raíz por los workspaces → se le puso un stub válido.
+- Dependencias del stack objetivo aún **no** instaladas a propósito (tRPC client +
+  react-query, Formik + Zod): se agregan al conectar el BE para no dejar deps huérfanas.
+- Backend es sólo un stub; es la parte más desactualizada y la de mayor trabajo (Fase 4).
+- Decisión abierta menor: sweetalert2 se queda por ahora (podría migrar a AntD).
+
+---
+
 ## 0. Objetivo
 
 Construir un **template base actualizado y neutro** (monorepo) para arrancar
@@ -89,14 +116,30 @@ compartidos (validar en ambos lados) y utils puros.
 - [ ] Confirmar que postinstall (git hooks + secrets) funciona con npm.
 - [ ] Decidir destino de `secrets.ts` (hoy apunta a `apps/backend/src/config/envs/`).
 
-### Fase 2 — Frontend que levante y corra ⭐ (prioridad)
-- [ ] Scaffold Vite + React + TS en `apps/frontend` (base: repos FE recientes del usuario).
-- [ ] `package.json` del FE con herramientas base: AntD 5, Zustand, tRPC client +
-      react-query, Formik + Zod, SCSS Modules, react-router-dom.
-- [ ] Estructura `src/` según convenciones de `claude.md` (pages, layout, common,
-      providers, store, utils, styles).
-- [ ] Providers base (AntD ConfigProvider, router, react-query/tRPC client).
-- [ ] Verificar: `npm run front` levanta sin errores.
+### Fase 2 — Frontend que levante y corra ⭐ (EN PROGRESO)
+> Base: proyecto FE "Vivir Tekk" (admin de condominios) copiado y **limpiado**
+> de 431 → ~60 archivos. Se eliminó todo el negocio, Apollo/GraphQL, framer-motion,
+> common/forms, y branding. Queda el esqueleto + design-system genérico.
+- [x] Vite + React 19 + TS operativo en `apps/frontend`.
+- [x] `package.json` FE saneado: quitados `react-barcode`, `react-phone-input-2`,
+      `@ant-design/v5-patch-for-react-19` (antd 6 ya soporta React 19); agregado
+      `@vitejs/plugin-react`. Conservados AntD 6, Zustand, react-forge-grid,
+      sweetalert2, react-helmet.
+- [x] Estructura `src/` con convenciones de `claude.md` (pages, layout, common,
+      providers, store, utils, styles, Router).
+- [x] Providers base: `AntdProv` (ConfigProvider dark) + `ScrollToTop` + Router.
+      **Borrados** `ApolloProv` y `AuthProvider` (dependían de GraphQL).
+- [x] `npm run front` levanta sin errores (typecheck limpio, todos los módulos
+      transforman OK, HTTP 200).
+- [ ] **PENDIENTE**: agregar herramientas del stack objetivo que aún NO están:
+      **tRPC client + @tanstack/react-query**, **Formik + Zod** (`zod-formik-adapter`).
+      Se harán al conectar con el BE (Fase 4) para no dejar deps sin uso.
+- [ ] **PENDIENTE**: decidir si sweetalert se queda o migra a AntD `message`/`Modal`.
+- [ ] Limpiar `common/app` restante y `HeadLabel` (usa react-forge-grid) si aplica.
+
+**Fix colateral**: `apps/backend/package.json` estaba en 0 bytes y rompía `npm i`
+en toda la raíz (workspaces). Se le puso un `package.json` mínimo válido (stub
+hasta Fase 4). Scripts raíz migrados de `yarn workspace` → `npm run ... --workspace`.
 
 ### Fase 3 — Generadores de frontend
 - [ ] Validar/ajustar generadores plop de FE contra la estructura nueva

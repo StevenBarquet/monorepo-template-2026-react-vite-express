@@ -1,0 +1,61 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.SwalStyleModal {
+  font-family: 'Inter';
+  color: white;
+
+  .ant-modal-content,
+  .ant-modal-header {
+    background-color: #32373c;
+  }
+  section {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    svg {
+      font-size: 34px;
+      margin-right: 0.5rem;
+    }
+    span {
+      font-weight: 500;
+      font-size: 26px;
+    }
+  }
+  .title {
+    &-success {
+      svg {
+        color: $colorSuccess;
+      }
+    }
+    &-error {
+      svg {
+        color: $colorError;
+      }
+    }
+    &-warning,
+    &-confirm {
+      svg {
+        color: $colorWarning;
+      }
+    }
+  }
+
+  .message {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 25px;
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

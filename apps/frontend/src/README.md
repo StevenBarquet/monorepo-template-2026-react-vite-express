@@ -1,0 +1,2 @@
+<!-- Prompt para convertir de tailwind a css -->
+Estamos en un archivo de scss, convierte el tailwind a css puro (nada de tailwind) (ignora las animaciones de motion), genera clases que correspondan a los componentes

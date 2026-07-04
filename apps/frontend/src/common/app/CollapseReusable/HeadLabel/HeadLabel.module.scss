@@ -1,0 +1,17 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.HeadLabel {
+  font-family: 'Inter';
+  .checkContainer {
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

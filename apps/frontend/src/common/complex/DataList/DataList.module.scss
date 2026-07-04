@@ -1,0 +1,36 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.DataList {
+  font-family: 'Inter';
+  position: relative;
+
+  @mixin pseudoLeftBar() {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 100%;
+    left: -12px;
+    top: 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .even::before {
+    background-color: $primaryColor8;
+    @include pseudoLeftBar();
+  }
+  .odd::before {
+    background-color: $secondaryColor8;
+    @include pseudoLeftBar();
+  }
+
+  .item {
+    margin: 8px 0 0 0;
+    position: relative;
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

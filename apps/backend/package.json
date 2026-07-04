@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo \"backend no configurado todavía (Fase 4)\" && exit 0"
+  },
+  "engines": {
+    "node": "26.x"
+  }
+}

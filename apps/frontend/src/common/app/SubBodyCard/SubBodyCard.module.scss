@@ -1,0 +1,73 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.SubBodyCard {
+  border: 0.5px solid $colorDark11;
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+
+  .blueTitle {
+    color: $primaryColor10;
+  }
+
+  .title,
+  .blueTitle {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 8px;
+    svg {
+      margin-right: 6px;
+      font-size: 20px;
+      color: $primaryColor10;
+    }
+  }
+  p {
+    margin: 0 10px;
+  }
+}
+
+.SubBodyInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 300;
+  color: $colorDark5;
+  & > *:nth-child(2) {
+    color: white;
+  }
+  svg {
+    margin-right: 5px;
+  }
+
+  .variant-default {
+    color: white;
+  }
+  .variant-green {
+    color: $colorSuccess;
+  }
+  .variant-red {
+    color: $colorError;
+  }
+  .variant-primary {
+    color: $primaryColor;
+  }
+  .variant-secondary {
+    color: $secondaryColor;
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

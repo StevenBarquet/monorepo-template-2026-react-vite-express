@@ -1,0 +1,39 @@
+@import 'animations';
+@import 'variables';
+@import './utils';
+
+// ----------------------------------Layout------------------------------------
+// -----------TRUE GLOBAL
+
+.center-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+// Hace que el texto dentro del contenedor no sea seleccionable
+.unselectable {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none;
+}
+
+.loading-icon {
+  animation: sb-spin 1.3s infinite linear;
+}
+
+.customHelper {
+  color: $colorError;
+  margin: 3px 0px 8px 0px;
+}
+
+.required {
+  color: $colorError;
+  padding-right: 6px;
+}
+
+.swal2-popup {
+  font-family: 'Inter';
+}

@@ -1,0 +1,44 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.HomeCont {
+  @include darkBackgroundGradient();
+  min-height: 100vh;
+  color: white;
+  font-family: 'Inter';
+
+  .centerContainer {
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    padding: 18px;
+  }
+
+  h2 {
+    font-size: 32px;
+    font-weight: 600;
+    span {
+      color: $primaryColor4;
+    }
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }

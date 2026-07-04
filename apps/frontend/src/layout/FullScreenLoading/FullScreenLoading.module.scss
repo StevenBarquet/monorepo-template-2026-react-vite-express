@@ -1,0 +1,27 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.FullScreenLoading {
+  font-family: 'Inter';
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(81, 81, 81, 0.471);
+
+  h2 {
+    font-family: 'Inter';
+    margin-top: 35px;
+    font-size: 28px;
+    font-weight: 800;
+    color: $secondaryColor5;
+  }
+}

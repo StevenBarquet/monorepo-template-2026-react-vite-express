@@ -1,0 +1,178 @@
+//----------------------Main Colors------------------
+//----------------------Purple
+$primaryColor: #4ca8f4;
+$primaryColor1: mix($primaryColor, white, 10%);
+$primaryColor2: mix($primaryColor, white, 20%);
+$primaryColor3: mix($primaryColor, white, 30%);
+$primaryColor4: mix($primaryColor, white, 40%);
+$primaryColor5: mix($primaryColor, white, 50%);
+$primaryColor6: mix($primaryColor, white, 60%);
+$primaryColor7: mix($primaryColor, white, 70%);
+$primaryColor8: mix($primaryColor, white, 80%);
+$primaryColor9: mix($primaryColor, white, 90%);
+$primaryColor10: mix($primaryColor, white, 100%); // color base
+$primaryColor11: mix($primaryColor, black, 90%);
+$primaryColor12: mix($primaryColor, black, 80%);
+$primaryColor13: mix($primaryColor, black, 70%);
+$primaryColor14: mix($primaryColor, black, 60%);
+$primaryColor15: mix($primaryColor, black, 50%);
+$primaryColor16: mix($primaryColor, black, 40%);
+$primaryColor17: mix($primaryColor, black, 30%);
+$primaryColor18: mix($primaryColor, black, 20%);
+$primaryColor19: mix($primaryColor, black, 10%);
+$primaryColor20: mix($primaryColor, black, 0%);
+
+$secondaryColor: #8824fa;
+$secondaryColor1: mix($secondaryColor, white, 10%);
+$secondaryColor2: mix($secondaryColor, white, 20%);
+$secondaryColor3: mix($secondaryColor, white, 30%);
+$secondaryColor4: mix($secondaryColor, white, 40%);
+$secondaryColor5: mix($secondaryColor, white, 50%);
+$secondaryColor6: mix($secondaryColor, white, 60%);
+$secondaryColor7: mix($secondaryColor, white, 70%);
+$secondaryColor8: mix($secondaryColor, white, 80%);
+$secondaryColor9: mix($secondaryColor, white, 90%);
+$secondaryColor10: mix($secondaryColor, white, 100%); // color base
+$secondaryColor11: mix($secondaryColor, black, 90%);
+$secondaryColor12: mix($secondaryColor, black, 80%);
+$secondaryColor13: mix($secondaryColor, black, 70%);
+$secondaryColor14: mix($secondaryColor, black, 60%);
+$secondaryColor15: mix($secondaryColor, black, 50%);
+$secondaryColor16: mix($secondaryColor, black, 40%);
+$secondaryColor17: mix($secondaryColor, black, 30%);
+$secondaryColor18: mix($secondaryColor, black, 20%);
+$secondaryColor19: mix($secondaryColor, black, 10%);
+$secondaryColor20: mix($secondaryColor, black, 0%);
+
+//----------------------Pink
+$colorPink: #fa24b3;
+$colorPink1: mix($colorPink, white, 10%);
+$colorPink2: mix($colorPink, white, 20%);
+$colorPink3: mix($colorPink, white, 30%);
+$colorPink4: mix($colorPink, white, 40%);
+$colorPink5: mix($colorPink, white, 50%);
+$colorPink6: mix($colorPink, white, 60%);
+$colorPink7: mix($colorPink, white, 70%);
+$colorPink8: mix($colorPink, white, 80%);
+$colorPink9: mix($colorPink, white, 90%);
+$colorPink10: mix($colorPink, white, 100%); // color base
+$colorPink11: mix($colorPink, black, 90%);
+$colorPink12: mix($colorPink, black, 80%);
+$colorPink13: mix($colorPink, black, 70%);
+$colorPink14: mix($colorPink, black, 60%);
+$colorPink15: mix($colorPink, black, 50%);
+$colorPink16: mix($colorPink, black, 40%);
+$colorPink17: mix($colorPink, black, 30%);
+$colorPink18: mix($colorPink, black, 20%);
+$colorPink19: mix($colorPink, black, 10%);
+$colorPink20: mix($colorPink, black, 0%);
+
+// --- Gradients
+$dark-bg: rgb(23, 23, 38);
+$light-bg: rgb(22, 32, 63);
+
+@mixin darkBackgroundGradient() {
+  background: rgb(1, 1, 3);
+  background: linear-gradient(
+    to bottom,
+    $dark-bg 0%,
+    $dark-bg 20%,
+    $light-bg 50%,
+    $dark-bg 80%,
+    $dark-bg 100%
+  );
+  background-size: 100vw 900px;
+  background-repeat: repeat-y;
+}
+@mixin cardsBackground() {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+@mixin cardsBackgroundLight() {
+  background-color: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(5px);
+}
+
+@mixin titleColor() {
+  background: linear-gradient(to right, $primaryColor3 10%, $secondaryColor7);
+  background-clip: text; // Add this line
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin titleColorLight() {
+  background: linear-gradient(to right, $primaryColor2 10%, $secondaryColor3);
+  background-clip: text; // Add this line
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+//----------------------Dark
+$colorDark0: mix(white, black, 100%); // #ffffff
+$colorDark1: mix(white, black, 95%); // #f2f2f2
+$colorDark2: mix(white, black, 90%); // #e6e6e6
+$colorDark3: mix(white, black, 85%); // #d9d9d9
+$colorDark4: mix(white, black, 80%); // #cccccc
+$colorDark5: mix(white, black, 75%); // #bfbfbf
+$colorDark6: mix(white, black, 70%); // #b3b3b3
+$colorDark7: mix(white, black, 65%); // #a6a6a6
+$colorDark8: mix(white, black, 60%); // #999999
+$colorDark9: mix(white, black, 55%); // #8c8c8c
+$colorDark10: mix(white, black, 50%); // #808080
+$colorDark11: mix(white, black, 45%); // #737373
+$colorDark12: mix(white, black, 40%); // #666666
+$colorDark13: mix(white, black, 35%); // #595959
+$colorDark14: mix(white, black, 30%); // #4d4d4d
+$colorDark15: mix(white, black, 25%); // #404040
+$colorDark16: mix(white, black, 20%); // #333333
+$colorDark17: mix(white, black, 15%); // #262626
+$colorDark18: mix(white, black, 10%); // #1a1a1a
+$colorDark19: mix(white, black, 5%); // #0d0d0d
+$colorDark20: mix(white, black, 0%); // #000000
+
+// ---Default
+$colorDark: $colorDark20;
+
+//----------------------Light
+$colorLight0: mix(white, black, 0%);
+$colorLight1: mix(white, black, 5%);
+$colorLight2: mix(white, black, 10%);
+$colorLight3: mix(white, black, 15%);
+$colorLight4: mix(white, black, 20%);
+$colorLight5: mix(white, black, 25%);
+$colorLight6: mix(white, black, 30%);
+$colorLight7: mix(white, black, 35%);
+$colorLight8: mix(white, black, 40%);
+$colorLight9: mix(white, black, 45%);
+$colorLight10: mix(white, black, 50%);
+$colorLight11: mix(white, black, 55%);
+$colorLight12: mix(white, black, 60%);
+$colorLight13: mix(white, black, 65%);
+$colorLight14: mix(white, black, 70%);
+$colorLight15: mix(white, black, 75%);
+$colorLight16: mix(white, black, 80%);
+$colorLight17: mix(white, black, 85%);
+$colorLight18: mix(white, black, 90%);
+$colorLight19: mix(white, black, 95%);
+$colorLight20: mix(white, black, 100%);
+// // ---Default
+$colorLight: $colorLight20;
+
+// $colorLight1: #ffffff;
+// $colorLight2: #e9e9e9;
+// $colorLight3: #dbdbdb;
+// $colorLight4: #cacaca;
+// $colorLight5: #bababa;
+// $colorLight6: #b0b0b0;
+// $colorLight7: #a5a5a5;
+// // ---Default
+// $colorLight: $colorLight1;
+
+//----------------------Specials------------------
+$colorSuccess: #70ba59;
+$colorWarning: #f1df17;
+$colorError: #ff4d4f;
+$antFormError: #dc4446;
+//----------------------Sizes------------------
+$miCuentaPadding: 32px;

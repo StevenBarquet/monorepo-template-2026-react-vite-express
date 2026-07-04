@@ -1,0 +1,20 @@
+@import '/src/styles/variables';
+@import '/src/styles/animations';
+@import '/src/styles/utils';
+
+.StyledModal {
+  font-family: 'Inter';
+  .ant-modal-content,
+  .ant-modal-header {
+    background-color: #16203f;
+  }
+  section {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+// // desk mob xs sm md lg xl xxl
+// @include onlyIn(lg) {
+//   background-color: #f28181;
+// }
