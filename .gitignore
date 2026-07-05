@@ -14,8 +14,11 @@ dist-ssr
 *.local
 
 # Editor directories and files
+# Se ignora .vscode/* salvo lo que el template SÍ comparte (DX consistente):
+# settings.json (format-on-save + autofix ESLint) y extensions.json.
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo

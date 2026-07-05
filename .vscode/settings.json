@@ -1,0 +1,63 @@
+{
+  // Formateo/autofix al guardar SOLO en los lenguajes de abajo.
+  // Se apaga globalmente y se habilita por lenguaje para no tocar
+  // otros tipos de archivo (md, yaml, etc).
+  "editor.formatOnSave": false,
+
+  // ESLint usa flat config (eslint.config.mjs)
+  "eslint.useFlatConfig": true,
+
+  // ESLint 10 requiere Node 22+. La extensión usa el `node` del PATH; para que
+  // sea el correcto, abre VSCode con Node 26 activo (ver .nvmrc en la raíz:
+  // `nvm use` antes de abrir el editor). Así evitamos una ruta hardcodeada por
+  // máquina. Si tu default global ya es Node 26, no necesitas hacer nada.
+
+  // Validar estos lenguajes con ESLint (js/ts + variantes react).
+  // Los .mjs/.cjs/.mts/.cts caen bajo javascript/typescript.
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Prettier como formateador por defecto.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // --- Lenguajes con formato + autofix de ESLint al guardar ---
+  // js/ts (incluye .mjs/.cjs/.mts/.cts) + variantes react
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
+  },
+
+  // --- Lenguajes solo con formato de Prettier (ESLint no los valida) ---
+  "[html]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

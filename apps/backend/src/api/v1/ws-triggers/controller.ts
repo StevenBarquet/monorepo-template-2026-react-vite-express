@@ -18,7 +18,7 @@ export type WsNotification = {
 function logic(
   _req: express.Request,
   res: express.Response,
-  _next: express.NextFunction
+  _next: express.NextFunction,
 ) {
   const sent = broadcast()
   res.json({ triggered: true, clients: sent })
@@ -33,7 +33,7 @@ function broadcast(): number {
   const msg = JSON.stringify(notification)
 
   const openClients = [...wss.clients].filter(
-    (c) => c.readyState === WebSocket.OPEN
+    (c) => c.readyState === WebSocket.OPEN,
   )
   openClients.forEach((c) => c.send(msg))
 

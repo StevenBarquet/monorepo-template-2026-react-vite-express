@@ -47,6 +47,10 @@ monorepo/
   `generate-*`) y delegan al workspace con `npm run <script> --workspace=<app>`.
 - Para agregar una dependencia a un workspace:
   `npm install <pkg> --workspace=apps/<app>` (o `-D` para devDependency).
+- **PROHIBIDO instalar dependencias sin el flag `-E` (`--save-exact`).** Siempre
+  versiones exactas, nunca rangos con caret (`^`) ni tilde (`~`). Ejemplo correcto:
+  `npm install -E <pkg>` / `npm install -D -E <pkg>`. Si un `package.json` termina
+  con `^` o `~` en alguna versión, es un error: pínnealo a la versión exacta.
 
 ## Shared Code (`@app/shared`)
 
