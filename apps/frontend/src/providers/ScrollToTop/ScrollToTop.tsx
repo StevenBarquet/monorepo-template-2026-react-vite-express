@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+/** Componente tonto wrapper que sirve para escrollear al top de la pagina cuando se interactua con la navegación de spa tipo react router */
 export function ScrollToTop() {
   const { pathname } = useLocation();
 

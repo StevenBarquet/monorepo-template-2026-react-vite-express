@@ -8,12 +8,12 @@ import { LazyLoadingScreen } from '../layout/LazyLoadingScreen/LazyLoadingScreen
 const AppRoutes = lazy(() => import('src/Router/AppRoutes'));
 
 /**
- * Routes Component: raíz de ruteo de la aplicación. Carga los módulos de rutas de
+ * Router Component: raíz de ruteo de la aplicación. Carga los módulos de rutas de
  * forma diferida (lazy). Si la app crece, puedes agrupar rutas por sección
  * (p. ej. `/admin/*`, `/auth/*`) añadiendo más módulos aquí.
  * @returns {ReactElement} ReactElement
  */
-export function Routes(): ReactElement {
+export function Router(): ReactElement {
   return (
     <Fragment>
       <Suspense fallback={<LazyLoadingScreen />}>

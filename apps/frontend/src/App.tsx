@@ -1,12 +1,12 @@
 import { Layout } from './layout/Layout';
 import { GlobalProviders } from './providers/GlobalProviders';
-import { Routes } from './Router/Routes';
+import { Router } from './Router/Router';
 
 function App() {
   return (
     <GlobalProviders>
       <Layout>
-        <Routes />
+        <Router />
       </Layout>
     </GlobalProviders>
   );
