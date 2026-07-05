@@ -8,13 +8,13 @@
 
 ## ESTADO ACTUAL
 
-**Avance global: ~35%** · Fase activa: **Fase 2 (Frontend)** — casi terminada.
+**Avance global: ~50%** · Fase activa: **Fase 4 (Backend)** — siguiente. **Frontend concluido ✅**
 
 | Fase | Estado |
 |------|--------|
 | 1 · Infra raíz (npm + Node 26) | ✅ Cubierta (scripts migrados a npm, `engines` en Node 26, `npm i` corre) |
-| 2 · Frontend que levante | 🟡 ~85% — levanta limpio; faltan tRPC-client/react-query y Formik+Zod (se suman en Fase 4) |
-| 3 · Generadores FE | ⬜ Pendiente |
+| 2 · Frontend que levante | ✅ **Concluida** — levanta y buildea limpio; deps de build actualizadas y verificadas |
+| 3 · Generadores FE | ✅ **Concluida** — probados end-to-end; plantillas adaptadas a Sass moderno |
 | 4 · Backend tRPC + Express | ⬜ Pendiente (lo más grande) |
 | 5 · `apps/shared` | ⬜ Pendiente |
 | 6 · Generadores BE (→ tRPC) | ⬜ Pendiente |
@@ -23,13 +23,26 @@
 **Notas resumidas:**
 - El FE se armó limpiando un proyecto real ("Vivir Tekk"): de **431 → ~60 archivos**.
   Fuera negocio, Apollo/GraphQL, framer-motion, `common/forms` y branding. Quedó el
-  esqueleto + design-system genérico. `npm run front` arranca sin errores.
-- Fix clave: `apps/backend/package.json` vacío (0 bytes) rompía `npm i` en toda la
-  raíz por los workspaces → se le puso un stub válido.
-- Dependencias del stack objetivo aún **no** instaladas a propósito (tRPC client +
-  react-query, Formik + Zod): se agregan al conectar el BE para no dejar deps huérfanas.
-- Backend es sólo un stub; es la parte más desactualizada y la de mayor trabajo (Fase 4).
-- Decisión abierta menor: sweetalert2 se queda por ahora (podría migrar a AntD).
+  esqueleto + design-system genérico.
+- **Deps de build actualizadas** (vite 8, TS 6, sass 1.101, cssnano 8, preset-env 11…)
+  y verificadas: `tsc` + `vite build` limpios, PostCSS aplicando (autoprefixer,
+  cssnano, preset-env/nesting), dev server sin warnings.
+- **Migración a Sass moderno**: `@import`→`@use`/`@forward`, `mix()`→`color.mix()`,
+  `map-get`→`map.get`. Los mixins/variables se consumen con `@use '…' as *`, por lo
+  que la invocación no cambió (`onlyIn(lg)`, `darkBackgroundGradient()` siguen igual).
+- **Config build modernizada**: TS `moduleResolution: "bundler"` (sin `baseUrl`),
+  Vite con resolución de paths nativa (se quitó `vite-tsconfig-paths`), `@fontsource`
+  movido a `_index.scss`.
+- **Generadores FE** probados (page/comp/store/hook): funcionan y compilan. `page`
+  registra ruta en `AppRoutes.tsx`. Nota: `component`/`hook` requieren **ruta
+  absoluta** (documentado en README). Sin agrupación de pages por defecto.
+- **claude.md** reestructurado en 3 secciones (GENERAL / FRONTEND ONLY / BACKEND
+  ONLY) + 3 reglas nuevas (usar generadores, verificar build antes de terminar,
+  preferir sintaxis moderna).
+- Fix histórico: `apps/backend/package.json` vacío rompía `npm i` → stub válido.
+- Pendiente para Fase 4: **tRPC client + react-query** y **Formik + Zod** aún no
+  instalados a propósito (se suman al conectar el BE). Decisión abierta menor:
+  sweetalert2 se queda por ahora (podría migrar a AntD).
 
 ---
 
@@ -116,7 +129,7 @@ compartidos (validar en ambos lados) y utils puros.
 - [ ] Confirmar que postinstall (git hooks + secrets) funciona con npm.
 - [ ] Decidir destino de `secrets.ts` (hoy apunta a `apps/backend/src/config/envs/`).
 
-### Fase 2 — Frontend que levante y corra ⭐ (EN PROGRESO)
+### Fase 2 — Frontend que levante y corra ⭐ ✅ CONCLUIDA
 > Base: proyecto FE "Vivir Tekk" (admin de condominios) copiado y **limpiado**
 > de 431 → ~60 archivos. Se eliminó todo el negocio, Apollo/GraphQL, framer-motion,
 > common/forms, y branding. Queda el esqueleto + design-system genérico.
@@ -129,22 +142,33 @@ compartidos (validar en ambos lados) y utils puros.
       providers, store, utils, styles, Router).
 - [x] Providers base: `AntdProv` (ConfigProvider dark) + `ScrollToTop` + Router.
       **Borrados** `ApolloProv` y `AuthProvider` (dependían de GraphQL).
-- [x] `npm run front` levanta sin errores (typecheck limpio, todos los módulos
-      transforman OK, HTTP 200).
-- [ ] **PENDIENTE**: agregar herramientas del stack objetivo que aún NO están:
-      **tRPC client + @tanstack/react-query**, **Formik + Zod** (`zod-formik-adapter`).
-      Se harán al conectar con el BE (Fase 4) para no dejar deps sin uso.
-- [ ] **PENDIENTE**: decidir si sweetalert se queda o migra a AntD `message`/`Modal`.
-- [ ] Limpiar `common/app` restante y `HeadLabel` (usa react-forge-grid) si aplica.
+- [x] `npm run front` levanta sin errores y `npm run front-build` buildea limpio.
+- [x] **Deps de build actualizadas y verificadas** (vite 8, TS 6, sass 1.101,
+      cssnano 8, preset-env 11). PostCSS aplicando; dev server sin warnings.
+- [x] **Migración a Sass moderno** (`@use`/`color.mix`/`map.get`) + config build
+      modernizada (TS `bundler`, paths nativos de Vite, `@fontsource` en scss).
+- [ ] **DIFERIDO a Fase 4**: agregar **tRPC client + @tanstack/react-query** y
+      **Formik + Zod** (`zod-formik-adapter`) — se suman al conectar el BE.
+- [ ] **Decisión abierta menor**: sweetalert2 se queda o migra a AntD `message`/`Modal`.
 
 **Fix colateral**: `apps/backend/package.json` estaba en 0 bytes y rompía `npm i`
 en toda la raíz (workspaces). Se le puso un `package.json` mínimo válido (stub
 hasta Fase 4). Scripts raíz migrados de `yarn workspace` → `npm run ... --workspace`.
 
-### Fase 3 — Generadores de frontend
-- [ ] Validar/ajustar generadores plop de FE contra la estructura nueva
-      (rutas de `addRoute.js`, paths de `pages/`, `store/`, etc.).
-- [ ] Probar cada generador: component, page, store, form, hook.
+### Fase 3 — Generadores de frontend ✅ CONCLUIDA
+- [x] Generadores plop de FE validados contra la estructura nueva
+      (`addRoute.js` → `AppRoutes.tsx`, sin agrupación de pages por defecto).
+- [x] Probados end-to-end: component, page, store, hook (generan y compilan).
+- [x] Plantillas SCSS adaptadas a Sass moderno (`@use … as *`).
+- [x] Bug corregido: `hook.ts.hbs` importaba `@builder.io/qwik` (residuo) → limpiado.
+- Nota: generador de **form** (Formik) queda pendiente hasta integrar el stack de
+  formularios (documentado en README). `component`/`hook` requieren ruta absoluta.
+
+### ⚠️ Pendiente transversal — ESLint / linting
+El proyecto trae `.eslintrc` (config del repo anterior) pero el linting **no se ha
+revisado ni validado** con las versiones nuevas. **Se revisará cuando el BE esté
+funcionando** (se configurará linting/formatting de forma consistente para todo el
+monorepo — FE y BE — de una vez).
 
 ### Fase 4 — Arquitectura del backend (tRPC + Express)
 - [ ] Scaffold `apps/backend`: Express + tRPC adapter, TS, tsx para dev.

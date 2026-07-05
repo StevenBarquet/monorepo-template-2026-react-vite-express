@@ -1,4 +1,4 @@
-@import "variables";
+@use 'sass:map';
 
 /** Limita el número de lineas con una elipse $lines es el número de lineas a limitar */
 @mixin limitTextLines($lines) {
@@ -45,10 +45,7 @@ $breakpoints: (
 );
 
 @mixin onlyIn($key) {
-  $type: map-get(
-    $map: $breakpoints,
-    $key: $key
-  );
+  $type: map.get($breakpoints, $key);
 
   @if $type == "xs" {
     @media (max-width: 575px) {

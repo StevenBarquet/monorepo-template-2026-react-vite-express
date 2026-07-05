@@ -1,9 +1,15 @@
-export declare global {
+// Declaraciones de módulos sin tipos (assets estáticos).
+
+declare module '*.png';
+declare module '*.jpg';
+declare module '*.jpeg';
+declare module '*.webp';
+declare module '*.svg';
+
+declare global {
   interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  };
-  
-  module '*.png';
-  module '*.webp';
-  module '*.jpg';
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: unknown;
+  }
 }
+
+export {};

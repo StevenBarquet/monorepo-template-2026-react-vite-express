@@ -1,31 +1,27 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
-  
+  plugins: [react()],
+
   resolve: {
-    alias: {
-      '@node_modules': '../../node_modules',
-      '@src': './src',
-      "@shared": "../shared"
-    },
+    // Vite resuelve los `paths` del tsconfig de forma nativa (antes vite-tsconfig-paths).
+    tsconfigPaths: true,
   },
   css: {
     modules: {
-      // Esta es la configuración clave para personalizar cómo se generan los identificadores locales
-      generateScopedName: (name) => {
-        return name;
-      },
+      // Mantiene los nombres de clase tal cual (sin hash). Ver claude.md > className Usage.
+      generateScopedName: (name) => name,
     },
     preprocessorOptions: {
       scss: {
-        // Configuración para incluir rutas. Esto es equivalente al `includePaths` en tu configuración de Next.js.
-        includePaths: [path.resolve(__dirname, 'src/styles')],
-        api: 'legacy',
+        // Permite `@use 'variables'` sin rutas absolutas desde cualquier .scss.
+        loadPaths: [path.resolve(__dirname, 'src/styles')],
+        // Silencia los deprecation warnings que provienen de dependencias (node_modules),
+        // p. ej. sweetalert2-custom-theme, cuyo código no controlamos.
+        quietDeps: true,
       },
     },
   },

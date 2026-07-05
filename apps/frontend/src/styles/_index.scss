@@ -1,4 +1,5 @@
-@import './theme.scss';
-@import './global.scss';
-@import 'react-forge-grid/dist/css/index.css';
-@import 'sweetalert2-custom-theme/custom-admin.scss';
+@use '@fontsource/inter/index.css' as fontInter;
+@use './theme';
+@use './global';
+@use 'react-forge-grid/dist/css/index.css' as forgeGrid;
+@use 'sweetalert2-custom-theme/custom-admin.scss' as swalTheme;

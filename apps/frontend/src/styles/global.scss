@@ -1,6 +1,6 @@
-@import 'animations';
-@import 'variables';
-@import './utils';
+@use 'animations';
+@use 'variables' as *;
+@use 'utils' as *;
 
 // ----------------------------------Layout------------------------------------
 // -----------TRUE GLOBAL

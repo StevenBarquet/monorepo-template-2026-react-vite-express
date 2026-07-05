@@ -1,6 +1,6 @@
-@import '/src/styles/variables';
-@import '/src/styles/animations';
-@import '/src/styles/utils';
+@use '/src/styles/variables' as *;
+@use '/src/styles/animations' as *;
+@use '/src/styles/utils' as *;
 
 .ColoredLi {
   position: relative;
