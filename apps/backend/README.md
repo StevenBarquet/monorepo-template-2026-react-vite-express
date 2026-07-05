@@ -71,7 +71,6 @@ curl "http://localhost:4000/api/v1/trigger?count=5&delay=100&message=hello"
 
 ## Pending
 
-- [ ] ws-triggers: simplificar aún más el endpoint de ejemplo
 - [ ] ws: agregar implementación bidireccional sencilla (client → server) como template
 - [ ] Error handler: estudiar y definir estrategia final
 - [ ] responses.ts: evaluar si el patrón se mantiene o se redefine

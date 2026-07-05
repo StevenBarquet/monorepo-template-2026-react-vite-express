@@ -37,7 +37,6 @@
     "@types/supertest": "7.2.0",
     "@types/ws": "8.18.1",
     "@vitest/coverage-v8": "4.1.9",
-    "eslint-plugin-format": "2.0.1",
     "supertest": "7.2.2",
     "tsc-alias": "1.8.15",
     "tsx": "4.19.4",

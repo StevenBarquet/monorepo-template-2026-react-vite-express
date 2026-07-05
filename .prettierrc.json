@@ -1,6 +1,16 @@
 {
-  "trailingComma": "es5",
-  "tabWidth": 2,
+  "$schema": "https://json.schemastore.org/prettierrc",
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 80,
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "endOfLine": "lf",
+  "singleAttributePerLine": false,
+  "quoteProps": "as-needed"
 }

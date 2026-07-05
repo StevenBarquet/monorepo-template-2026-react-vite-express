@@ -1,0 +1,25 @@
+# Prettier ignore — monorepo (npm workspaces).
+# Solo formateamos código fuente; nada generado, instalado ni de lock.
+
+# Dependencias
+node_modules
+apps/*/node_modules
+
+# Builds / salidas generadas
+dist
+dist-ssr
+apps/*/dist
+apps/shared/dist
+
+# Cobertura y artefactos de test
+apps/*/coverage
+
+# Lockfiles y buildinfo (no se formatean)
+package-lock.json
+apps/frontend/tsconfig.tsbuildinfo
+
+# Generados por scripts (post-commit / secrets)
+apps/shared/appVersion.ts
+apps/backend/src/configs/envs/secrets.ts
+
+scripts
