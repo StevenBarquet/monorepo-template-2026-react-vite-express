@@ -1,5 +1,6 @@
 // ---Dependencys
 import { ReactElement } from 'react';
+import * as commitInfo from 'shared/appVersion';
 import style from './HomeCont.module.scss';
 // ---Components
 import { HelloWorld } from './HelloWorld/HelloWorld';
@@ -24,6 +25,7 @@ export function HomeCont(): ReactElement {
           <h3>Frontend listo 🎉</h3>
           <HelloWorld />
         </div>
+        <pre>{JSON.stringify(commitInfo, null, 2)}</pre>
       </div>
     </div>
   );
