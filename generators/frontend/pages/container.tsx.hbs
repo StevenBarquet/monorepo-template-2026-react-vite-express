@@ -2,9 +2,6 @@
 import React from "react";
 // ---Styles
 import style from './{{pascalCase name}}.module.scss';
-{{#if (or (eq containerType "Admin") (eq containerType "User"))}}
-import { AppMenu } from "src/layout/AppMenu/AppMenu";
-{{/if}}
 
 /**
  * {{pascalCase name}} Component:  Descripción del comportamiento...
@@ -15,19 +12,8 @@ export function {{pascalCase name}}() {
   // -----------------------AUX METHODS
   // -----------------------RENDER
   return (
-      {{#if (eq containerType "Admin")}}
-      <AppMenu isAdmin  className={style['{{pascalCase name}}'] }>
-        {{pascalCase name}}
-      </AppMenu>
-      {{else if (eq containerType "User")}}
-      <AppMenu  className={style['{{pascalCase name}}'] }>
-        {{pascalCase name}}
-      </AppMenu>
-      {{else}}
-      <div className={style['{{pascalCase name}}'] }>
-       {{pascalCase name}}
-      </div>
-      {{/if}}
+    <div className={style['{{pascalCase name}}']}>
+      {{pascalCase name}}
+    </div>
   );
 }
-

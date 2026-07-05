@@ -3,12 +3,8 @@
 @import '/src/styles/utils';
 
 .{{pascalCase name}} {
-      {{#if (or (eq containerType "Admin") (eq containerType "User"))}}
-      padding-top: $miCuentaPadding;
-      {{else}}
       @include darkBackgroundGradient();
       min-height: 100vh;
-      {{/if}}
       color: white;
       font-family: 'Inter';
 }

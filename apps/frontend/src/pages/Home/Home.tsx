@@ -3,7 +3,7 @@
 import { ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
 // ---Components
-import { HomeCont } from 'src/pages/Landing/Home/HomeCont/HomeCont';
+import { HomeCont } from 'src/pages/Home/HomeCont/HomeCont';
 
 /**
  * Componente HomePage: este componente es para dar datos al Helmet de
