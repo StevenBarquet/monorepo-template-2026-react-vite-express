@@ -8,7 +8,9 @@ import morgan from "morgan";
 
 /** Attaches small initial middlewares to the Express app */
 export function attachHeaderMiddlewares(app: Express) {
-  app.use(morgan("dev"));
+  if (TYPED_ENVS.NODE_ENV !== "production") {
+    app.use(morgan("dev"));
+  }
   app.use(helmet());
   app.use(cors());
   app.use(express.json());

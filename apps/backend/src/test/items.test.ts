@@ -1,7 +1,7 @@
 import request from "supertest";
 import { describe, expect, it } from "vitest";
 
-import { app } from "../src/app/express-app";
+import { app } from "../app/express-app";
 
 describe("POST /api/v1/items", () => {
   it("returns 400 when name is missing from body", async () => {

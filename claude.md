@@ -1,3 +1,7 @@
+# Language
+
+- SIEMPRE responde en español. Nunca uses inglés en tus respuestas al usuario.
+
 # Project Rules
 
 > **Monorepo.** Este repo usa **npm workspaces** sobre **Node 26** y organiza el

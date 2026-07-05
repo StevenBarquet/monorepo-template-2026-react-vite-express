@@ -73,9 +73,7 @@ curl "http://localhost:4000/api/v1/trigger?count=5&delay=100&message=hello"
 
 - [ ] ws-triggers: simplificar aún más el endpoint de ejemplo
 - [ ] ws: agregar implementación bidireccional sencilla (client → server) como template
-- [ ] morgan: configurar para que solo corra en desarrollo
 - [ ] Error handler: estudiar y definir estrategia final
-- [ ] Tests: migrar de `test/` a co-located dentro de `src/`
 - [ ] responses.ts: evaluar si el patrón se mantiene o se redefine
 
 ## Requirements
