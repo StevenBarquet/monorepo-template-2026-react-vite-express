@@ -27,3 +27,4 @@ dist-ssr
 apps/frontend/tsconfig.tsbuildinfo
 apps/backend/src/configs/envs/secrets.ts
 apps/shared/dist
+apps/backend/coverage

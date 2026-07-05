@@ -1,8 +1,8 @@
-export const commitID = `4bf0d4c5f136ddf280408425a3640729a95707ad`;
+export const commitID = `4b45bef4739e13f09344b85f2771320491c9b14c`;
     
-  export const commitMssg = `move test de BE`;
+  export const commitMssg = `coverage ignorado en BE`;
   
-  export const commitDate = `Sun Jul 05 2026 12:41:05 GMT-0600 (Central Standard Time)`;
+  export const commitDate = `Sun Jul 05 2026 12:44:53 GMT-0600 (Central Standard Time)`;
   
   export const commitAuthor = `Steven Barquet`;
   
