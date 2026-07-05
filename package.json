@@ -16,6 +16,8 @@
     "back": "npm run dev --workspace=backend",
     "back-build": "npm run build --workspace=backend",
     "back-prod": "npm run prod --workspace=backend",
+    "back-test": "npm run test --workspace=backend",
+    "back-coverage": "npm run coverage --workspace=backend",
     "space_3": "---------------------------GENERATORS--------------------------------",
     "generate-query": "npx plop --plopfile generators/backend/plopfile.js",
     "generate-comp": "npx plop --plopfile generators/frontend/plopfile.js",

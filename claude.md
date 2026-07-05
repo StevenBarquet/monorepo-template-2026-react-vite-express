@@ -80,6 +80,18 @@ monorepo/
   adoptados: `@use`/`@forward` en Sass (nunca `@import`), `moduleResolution: "bundler"`
   en TS, resolución nativa de paths en Vite (sin `vite-tsconfig-paths`).
 
+## No Quick-Fix Hacks
+
+- **Nunca implementes soluciones rápidas que trasladen complejidad al developer.**
+  Si un problema es de tooling/config, resuélvelo en tooling/config — no ensucies
+  el código fuente para "salir del paso".
+- Ejemplos de lo que NO es aceptable:
+  - Agregar extensiones `.js` a imports en archivos TypeScript para satisfacer ESM.
+  - Workarounds manuales repetitivos que el build tool debería manejar.
+  - Cambios que "funcionan" pero que rompen la ergonomía o el estándar del proyecto.
+- Ante un problema de build/runtime, **arregla la configuración o cambia la
+  herramienta** — nunca parches en el código fuente.
+
 ## TypeScript Conventions
 
 - Use `type` imports where possible
