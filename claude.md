@@ -3,8 +3,8 @@
 > **Monorepo.** Este repo usa **npm workspaces** sobre **Node 26** y organiza el
 > código en `apps/`:
 > - `apps/frontend` — Vite + React (SPA client-side).
-> - `apps/backend` — tRPC + Express (pendiente de montar, ver Fase 4).
-> - `apps/shared` — código compartido entre BE y FE (workspace `@app/shared`, pendiente).
+> - `apps/backend` — Express REST API + WebSocket.
+> - `apps/shared` — código compartido entre BE y FE (workspace `@app/shared`).
 >
 > Las reglas están divididas en tres secciones. **Lee la que corresponde a lo que
 > estás tocando:**
@@ -30,8 +30,8 @@ Reglas transversales a todo el monorepo.
 monorepo/
 ├── apps/
 │   ├── frontend/       # Vite + React SPA
-│   ├── backend/        # tRPC + Express (pendiente)
-│   └── shared/         # @app/shared — tipos, utils, schemas compartidos (pendiente)
+│   ├── backend/        # Express REST API + WebSocket
+│   └── shared/         # @app/shared — tipos, utils, schemas compartidos
 ├── generators/         # Plantillas plop (scaffolding FE y BE)
 ├── scripts/            # Scripts de infra (git hooks, versionado por commit)
 └── package.json        # Root — workspaces + scripts orquestadores
@@ -47,13 +47,12 @@ monorepo/
 ## Shared Code (`@app/shared`)
 
 - Código usado por **más de un** workspace (BE y FE) vive en `apps/shared`:
-  tipos de dominio, schemas de Zod compartidos (validar en ambos lados),
-  constantes y utils puros.
+  tipos de dominio, constantes y utils puros.
 - Regla de dependencias: si un util de `shared` necesita una librería, esa
   librería se declara en el `package.json` de **quien consume** el util. npm
   hoistea a `node_modules` raíz; no se duplica físicamente.
-- El tipo `AppRouter` de tRPC **NO** vive en shared — vive en el backend y el
-  frontend lo importa como *type-only*.
+- Tipos exclusivos del BE van en `apps/backend/src/models/`. Solo se mueven a
+  shared si el FE también los necesita.
 
 ## Scaffolding — Prefer Generators
 
@@ -68,9 +67,10 @@ monorepo/
 ## Verification (before calling something done)
 
 - Tras cambios no triviales, **verifica que compila** antes de darlo por terminado:
-  correr `npm run front-build` (que hace `tsc && vite build`) — o al menos
-  `tsc --noEmit` + levantar el dev server — y confirmar que **no hay errores ni
-  warnings** nuevos.
+  - **Frontend:** `npm run front-build` (que hace `tsc && vite build`) — o al menos
+    `tsc --noEmit` + levantar el dev server.
+  - **Backend:** `npm run back-typecheck` (`tsc --noEmit`) + `npm run back-test`.
+- Confirmar que **no hay errores ni warnings** nuevos.
 - No reportar un cambio como completo sin esta verificación.
 
 ## Prefer Modern Syntax
@@ -378,7 +378,197 @@ export function MyFormComponent(): ReactElement {
 
 # BACKEND ONLY
 
-> ⚠️ El backend (tRPC + Express) **aún no se ha montado** (Fase 4). Esta sección se
-> completará cuando se defina la arquitectura del BE: estructura de
-> routers/procedures, manejo de contexto/auth, exportación del tipo `AppRouter`,
-> validación con Zod, etc. Por ahora no hay convenciones de backend que seguir.
+Aplica exclusivamente a `apps/backend`.
+
+## Stack
+
+- Express 5 (REST API)
+- WebSocket (`ws` package) integrado en el mismo servidor HTTP
+- TypeScript strict
+- **Dev:** `tsx` como runtime + Node `--watch` nativo para hot reload (no nodemon)
+- **Producción:** transpilación a JS (`tsc` → `dist/`), se ejecuta Node puro
+- `tsc-alias` para resolver path aliases (`@/*`) en el output compilado
+- Vitest + supertest para tests
+- `debug` package para logging con colores por namespace
+
+## Project Structure
+
+```
+apps/backend/src/
+├── index.ts                # Entrypoint: starts HTTP + WS server
+├── app/
+│   ├── express-app.ts      # Express setup (middlewares + route mounting)
+│   ├── ws.ts               # WebSocket server setup
+│   └── route-logger.ts     # Prints registered routes on boot
+├── api/
+│   └── index.ts            # Route registry (single source of truth)
+│       ├── items/          # Example: folder-per-endpoint
+│       └── ws-triggers/    # Example: endpoint that broadcasts to WS clients
+├── configs/
+│   ├── constants.ts        # App-wide constants
+│   ├── logger.ts           # debug-based logger (app:prod, app:warn, app:error, app:Debug)
+│   ├── typed-envs.ts       # Final typed export of environment variables
+│   └── envs/               # Environment system (see below)
+│       ├── default.ts      # Base values (PORT, etc.)
+│       ├── dev.ts          # Dev overrides
+│       ├── prod.ts         # Prod overrides
+│       ├── secrets.ts      # Local secrets (gitignored, never in prod)
+│       └── index.ts        # EnvsLoader: merge + validation
+├── middlewares/
+│   └── general-and-small.ts  # Morgan, Helmet, CORS, JSON parser, 404, error handler
+├── models/
+│   └── responses.ts        # Global backend-only types
+├── database/               # Reserved: DB config, ORM, queries (empty by default)
+└── 3rd-party/              # Reserved: SDK integrations, external service wrappers
+```
+
+## Routing & Endpoints
+
+### Folder-per-endpoint
+
+Each endpoint (or group of related sub-routes) lives in its own folder under
+`api/`. The folder represents an entity, feature, or logical grouping.
+
+```
+api/
+├── index.ts           # Route registry — single source of truth
+├── items/
+│   └── controller.ts  # Simple endpoint: all in one file
+└── orders/
+    ├── controller.ts  # Entry point + light logic
+    ├── logic.ts       # Heavy business logic, queries, transformations
+    ├── constants.ts   # Scoped constants
+    └── validations.ts # Input validation
+```
+
+### Route Registry
+
+All endpoints are registered in the `routes` array of `api/index.ts`. No routes
+are mounted outside this registry. The route-logger reads from this same array
+to print all endpoints on boot.
+
+```ts
+const routes = [
+  { path: "/items", router: itemsRouter, file: "src/api/items/controller.ts" },
+];
+```
+
+### Controller Structure
+
+- `controller.ts` is always the entry point of an endpoint folder.
+- It defines the router, attaches HTTP verb handlers, and contains light logic.
+- If logic grows heavy (complex transformations, multiple queries, orchestration),
+  extract it to a `logic.ts` file so the controller stays readable and
+  self-explanatory.
+- Possible files in an endpoint folder: `controller.ts` (required), `logic.ts`,
+  `validations.ts`, `constants.ts`, `helpers.ts`, sub-route folders.
+
+### No API Versioning
+
+This template does not use `/api/v1/` style versioning. Routes mount directly
+under `/api/`. Versioning can be added per-project if needed.
+
+## WebSocket
+
+- WS is mounted on the same HTTP server via the `upgrade` event.
+- Current implementation is **unidirectional (server → client)** for
+  notifications/broadcasts. Bidirectional (client → server messages) is
+  pending — to be added as a simple template when needed.
+- **HTTP trigger → WS broadcast** is the established pattern: an HTTP endpoint
+  can broadcast messages to all connected WS clients.
+
+## Environment System
+
+The env system uses a class-based merge pattern (no Zod, no `.env` files):
+
+1. `default.ts` — base values shared across all environments (PORT, etc.)
+2. `dev.ts` — development overrides (DB URLs, frontend URL, etc.)
+3. `prod.ts` — production overrides (reads from `process.env` or `secrets`)
+4. `secrets.ts` — local-only secrets for development (gitignored). In production,
+   inject secrets via `process.env`.
+5. `index.ts` — `EnvsLoader` merges default + runtime env, **validates that no
+   value is undefined or empty string**, and throws on boot if something is missing.
+6. `typed-envs.ts` — final export: `TYPED_ENVS` (cast to `NonUndefined<>` for
+   full type safety without optional checks downstream).
+
+Always import from `@/configs/typed-envs` — never read `process.env` directly
+in application code.
+
+## Logger
+
+Uses the `debug` package with colored namespaces:
+
+```ts
+import { logger } from '@/configs/logger';
+
+logger.prod('Visible in prod and dev');
+logger.debug('Visible only in dev');
+logger.warn('Warning');
+logger.error('Error');
+```
+
+Activated via `DEBUG=app:*` (all) or selectively (`DEBUG=app:prod`). The colored
+output per namespace improves DX in development. This is the permanent logging
+solution.
+
+## Middlewares
+
+Global middlewares live in `middlewares/`. The base set for every project:
+- `morgan` — HTTP request logging (dev only — pending config)
+- `helmet` — security headers
+- `cors` — CORS
+- `express.json()` — body parser
+- 404 handler + error handler
+
+## Testing
+
+- **Vitest + supertest** for endpoint integration tests.
+- Tests are a tool for refactoring and verifying complex endpoints — not a rigid
+  TDD requirement. Write tests where they add value, not as a blanket rule.
+- Test files live inside `src/` co-located with what they test (pending migration
+  from current `test/` location).
+- Coverage available via `npm run back-coverage` (v8 provider).
+
+## Database
+
+The template ships **without ORM or DB** by design. Database choice varies heavily
+by project (MongoDB, PostgreSQL, SQLite, Supabase, Firebase, etc.).
+
+- `src/database/` is reserved for DB config, models, queries, and migrations.
+- Each project fills this folder with its chosen stack.
+
+## 3rd Party Integrations
+
+- SDKs and external service wrappers live in `src/3rd-party/`.
+- If a 3rd-party integration is foundational to the entire app (e.g., GraphQL
+  engine, template engine, tRPC), it may deserve its own top-level folder in
+  `src/` instead.
+
+## Path Alias
+
+- `@/*` → `src/*` is available in tsconfig for convenience.
+- Use it only to shorten deeply nested imports. Relative imports are fine for
+  nearby files.
+
+## Build
+
+- **Dev** runs TS directly via `tsx` — no build step needed.
+- **Production** transpiles to `dist/` with full type validation:
+  `tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json`
+- `tsc-alias` resolves path aliases (`@/*`, `shared/*`) to relative paths in
+  the compiled output.
+- `tsconfig.json` — dev/typecheck config (`noEmit: true`, includes shared).
+- `tsconfig.build.json` — production build config (`outDir: "dist"`).
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Hot reload via native Node `--watch` + tsx |
+| `npm run build` | Full transpilation to `dist/` (tsc + tsc-alias) |
+| `npm run start` | Run compiled production build from `dist/` |
+| `npm run prod` | Build + start in one command |
+| `npm run typecheck` | Type-check only (`tsc --noEmit`, no output) |
+| `npm run test` | Run tests with Vitest |
+| `npm run coverage` | Tests + coverage report (v8) |
+| `npm run clean` | Remove `dist/` |

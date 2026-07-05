@@ -20,5 +20,4 @@ const routes = [
 
 for (const r of routes) router.use(r.path, r.router);
 
-export { routes };
-export default router;
+export { routes, router as apiRouter };

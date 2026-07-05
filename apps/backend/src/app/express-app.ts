@@ -1,5 +1,5 @@
 import express from "express";
-import api from "../api/v1";
+import { apiRouter } from "../api/v1";
 import * as middlewares from "../middlewares/general-and-small";
 import type { MessageResponse } from "../models/responses";
 import { attachHeaderMiddlewares } from "../middlewares/general-and-small";
@@ -17,7 +17,7 @@ function generateMainApp() {
   });
 
   // -- API Routes
-  app.use("/api/v1", api);
+  app.use("/api/v1", apiRouter);
 
   app.use(middlewares.notFound);
   app.use(middlewares.errorHandler);
