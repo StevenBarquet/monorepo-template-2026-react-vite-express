@@ -1,8 +1,8 @@
-export const commitID = `4b45bef4739e13f09344b85f2771320491c9b14c`;
+export const commitID = `ea8c90f3b7f6872f952863c04e3b3a62e05d6f9a`;
     
-  export const commitMssg = `coverage ignorado en BE`;
+  export const commitMssg = `limpieza de BE`;
   
-  export const commitDate = `Sun Jul 05 2026 12:44:53 GMT-0600 (Central Standard Time)`;
+  export const commitDate = `Sun Jul 05 2026 12:56:40 GMT-0600 (Central Standard Time)`;
   
   export const commitAuthor = `Steven Barquet`;
   

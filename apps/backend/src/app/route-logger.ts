@@ -15,11 +15,11 @@ function extractMethods(router: Router): string[] {
   return methods.length ? methods : ["USE"];
 }
 
-/** Prints all registered endpoints at boot from the route registry */
+/** Imprime al arranque todos los endpoints registrados desde el registro de rutas */
 export function printRoutes() {
   const baseUrl = `http://localhost:${TYPED_ENVS.PORT}`;
 
-  logger.debug("\n--- Registered routes ---\n");
+  logger.debug("\n--- Rutas registradas ---\n");
   routes.forEach((r, i) => {
     const methods = extractMethods(r.router);
     const fullPath = `/api/v1${r.path}`;

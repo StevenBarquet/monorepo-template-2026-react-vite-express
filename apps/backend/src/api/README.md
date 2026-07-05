@@ -1,15 +1,15 @@
-# API rules
+# Reglas de la API
 
-- Add a folder for each new route
-- Routes can grow as a tree depending con complexity
+- Agrega una carpeta por cada ruta nueva
+- Las rutas pueden crecer como un árbol según su complejidad
 
-## Structure
+## Estructura
 
-Each route can contain in same file or in separate files depending on complexity the following elements:
+Cada ruta puede contener, en el mismo archivo o en archivos separados según la complejidad, los siguientes elementos:
 
-- Controller (must)
-- logic (also called service)
-- validations
-- scoped constants
-- Scoped helpers or utils
-- Sub-Controllers or Sub-Routes with same structure
+- Controller (obligatorio)
+- logic (también llamado service)
+- validaciones
+- constantes de alcance local (scoped)
+- helpers o utils de alcance local (scoped)
+- Sub-Controllers o Sub-Routes con la misma estructura

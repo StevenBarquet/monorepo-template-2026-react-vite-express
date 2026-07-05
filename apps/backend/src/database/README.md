@@ -1,1 +1,1 @@
-Database config aqui
+Configuración de la base de datos aquí

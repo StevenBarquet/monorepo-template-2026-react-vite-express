@@ -1,6 +1,6 @@
-# Global Models & entities
+# Modelos y entidades globales
 
-- Typescript types
-- DB models
+- Tipos de TypeScript
+- Modelos de la BD
 
-Note: Only globals, types or other models can be module scoped if they are not needed in the app globally
+Nota: Solo los globales; los tipos u otros modelos pueden tener alcance de módulo si no se necesitan globalmente en la app

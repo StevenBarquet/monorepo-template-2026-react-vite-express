@@ -1,6 +1,6 @@
 import debug from 'debug';
 
-/* *Remember to set env var DEBUG=app:* in development and others depending on env */
+/* *Recuerda definir la variable de entorno DEBUG=app:* en desarrollo y otras según el entorno */
 export const logger = {
   prod: debug('app:prod'),
   warn: debug('app:warn'),

@@ -13,7 +13,7 @@ router.get<object, MessageResponse>("/", (req, res) => {
   });
 });
 
-// Route registry — single source of truth for all endpoints
+// Registro de rutas — única fuente de verdad para todos los endpoints
 const routes = [
   { path: "/health", router: healthRouter, file: "src/api/v1/health/controller.ts" },
   { path: "/items", router: itemsRouter, file: "src/api/v1/items/controller.ts" },
